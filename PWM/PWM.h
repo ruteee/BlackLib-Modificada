@@ -6,12 +6,10 @@
 #include<string>
 #include<stdio.h>
 #include<sstream>
+#include <experimental/filesystem>
+#include<unistd.h>
 
-#endif 
 
-const std::string PWM0_DIR = "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/*/export";
-const std::string PWM1_DIR = "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/*/export";
-const std::string PWM2_DIR = "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/*/export";
 
 using namespace std;
 
@@ -33,14 +31,26 @@ enum pwmName            {   P8_13                   = 0,
 
 enum statePwm { run = 1, stop = 0,};
 
+const std::string pwmMap[6] = {
+				"P8.13",
+				"P9.19",
+				"P9.14",
+				"P9.16",
+				"P9.21",
+				"P9.22",
+				};
 
 class PWM {
 
 	private:
 		int pwmPin;
+		string pwm0;
+		string pwm1;
+		string pwm2;
 		string baseDir;
 		void loadPWM();
 		void setPwmBoard();
+		string getPwmChipName(std::string path);
 
 	public:
 		PWM(pwmName pinName);
@@ -57,3 +67,4 @@ class PWM {
 		
 
 };
+#endif 

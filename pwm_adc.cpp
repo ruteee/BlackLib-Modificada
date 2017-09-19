@@ -6,18 +6,17 @@
 
 
 int main(int argc, char * argv[]){
-	//ADC adc4(AINx::AIN4);
+	ADC adc0(AINx::AIN0);
 	PWM pwm(P9_21);
 	pwm.setState(run);
+	int period = 100000000;
 	
 	std::cout << "run value " << pwm.getState() << endl;
 	while(true){
-		//float dutyCycle  = adc4.getPercentValue();
-		//std::cout << "Duty Value " << dutyCycle << endl;
-		pwm.setPeriod(100000000);
-		pwm.setDutyCycle(90000000);
-		//std::cout << "run value " << pwm.getState() << endl;
-		//std::cout << "dutyCycle " << pwm.getDutyCycle() << endl;
-		 
+		int dutyCycle  = adc0.getIntValue();
+		std::cout << "Duty Value " << dutyCycle << endl;
+		pwm.setPeriod(period);
+		pwm.setDutyCycle(period*dutyCycle/100.0);		 
 	}
+	return 0;
 }
