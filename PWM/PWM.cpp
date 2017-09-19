@@ -9,16 +9,18 @@ PWM::PWM(pwmName pinName)
 
 void PWM::loadPWM()
 {
+	std:: cout << "teste " << ("sudo sh -c 'echo 0 > " + PWM0_DIR).c_str() << endl;
 	system("sudo sh -c \"echo 'cape-universaln' > /sys/devices/platform/bone_capemgr/slots\"");
 	
-	system(("sudo sh -c \"echo 0 > " + PWM0_DIR).c_str());
-	system(("sudo sh -c \"echo 1 > " + PWM0_DIR).c_str()); 
 
-	system(("sudo sh -c \"echo 0 > " + PWM1_DIR).c_str()); 
-	system(("sudo sh -c \"echo 1 > " + PWM1_DIR).c_str());
+	system(("echo 0 > " + PWM0_DIR).c_str());
+	system(("echo 1 > " + PWM0_DIR).c_str()); 
 
-	system(("sudo sh -c \"echo 0 > " + PWM2_DIR).c_str());
-	system(("sudo sh -c \"echo 1 > " + PWM2_DIR).c_str()); 
+	system(("echo 0 > " + PWM1_DIR).c_str()); 
+	system(("echo 1 > " + PWM1_DIR).c_str());
+
+	system(("echo 0 > " + PWM2_DIR).c_str());
+	system(("echo 1 > " + PWM2_DIR).c_str()); 
 }
 
 

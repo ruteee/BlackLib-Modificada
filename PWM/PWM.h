@@ -9,9 +9,9 @@
 
 #endif 
 
-const std::string PWM0_DIR = "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/*\"";
-const std::string PWM1_DIR = "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/*\"";
-const std::string PWM2_DIR = "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/*\"";
+const std::string PWM0_DIR = "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/*/export";
+const std::string PWM1_DIR = "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/*/export";
+const std::string PWM2_DIR = "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/*/export";
 
 using namespace std;
 
