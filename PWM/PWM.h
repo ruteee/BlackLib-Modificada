@@ -9,9 +9,9 @@
 
 #endif 
 
-const string PWM0_DIR "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/*\"";
-const string PWM1_DIR "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/*\"";
-const strinf PWM2_DIR "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/*\"";
+const std::string PWM0_DIR = "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/*\"";
+const std::string PWM1_DIR = "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/*\"";
+const std::string PWM2_DIR = "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/*\"";
 
 using namespace std;
 
@@ -37,7 +37,7 @@ enum statePwm { run = 1, stop = 0,};
 class PWM {
 
 	private:
-		int pinName;
+		int pwmPin;
 		string baseDir;
 		void loadPWM();
 		void setPwmBoard();
@@ -50,7 +50,7 @@ class PWM {
 		int getDutyCycle();
 		void setDutyCycle(int duty);
 
-		int getState()		
+		int getState();	
 		void setState(statePwm state);
 		
 
