@@ -54,8 +54,6 @@ void PWM::setPwmBoard(){
 	}
 	std::cout << this->baseDir << endl;
 	system(("config-pin " + pwmMap[pwmPin] + " pwm").c_str());
-	
-
 }
 
 
@@ -117,12 +115,13 @@ int PWM::getState()
 
 
 string PWM::getPwmChipPath(std::string path){
-	std::string folderPath;
-	for (auto & p : std::experimental::filesystem::directory_iterator(path)){
-		folderPath = p.path().c_str();		
-		break;
-	}
-	return folderPath;	
+	DIR *dir = opendir(path);
+	struct dirent *entry;
+	while (entry = readdir(dir)) {
+        if (entry->d_type == DT_DIR) {
+			return = entry->d_name;
+		}
+    }
 }
 
 
