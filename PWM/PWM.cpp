@@ -10,49 +10,58 @@ PWM::PWM(pwmName pinName)
 
 void PWM::loadPWM()
 {
+	//TODO Adicionar clausula que checa se comando ja foi executado
 	system("sudo sh -c \"echo 'cape-universaln' > /sys/devices/platform/bone_capemgr/slots\"");
-	sleep(2);
+	
 }
 
-
 void PWM::setPwmBoard(){
+	std::cout << "Loading capemgr" << endl;
+	generatePathPwm(getFolderName(fixPathPwm0, "pwmchip"), 
+			getFolderName(fixPathPwm1, "pwmchip"), 
+			getFolderName(fixPathPwm2, "pwmchip"));
 
-	this->pwm0 = getPwmChipPath("/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/");
-	this->pwm1 = getPwmChipPath("/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/");
-	this->pwm2 = getPwmChipPath("/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/");
-	
-	cout << this->pwm0 << endl;
-	
 	switch (this->pwmPin){
 		case 0:
+			if(getFolderName(this->pwm2, "pwm1") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str()); 
+			}
 			this->baseDir = this->pwm2 + "/pwm1";
-			system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str()); 
 			break;
 		case 1:
+			if(getFolderName(this->pwm2, "pwm0") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str());	
+			}
 			this->baseDir = this->pwm2 + "/pwm0";
-			system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str());	
 			break;
 		case 2:
+			if(getFolderName(this->pwm1, "pwm0") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm1 + "/export'").c_str()); 
+			}
 			this->baseDir = this->pwm1 + "/pwm0";
-			system(("sudo sh -c 'echo 0 > " + this->pwm1 + "/export'").c_str()); 
 			break;
 		case 3:
+			if(getFolderName(this->pwm1, "pwm1") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm1 + "/export'").c_str());
+			}
 			this->baseDir = this->pwm1 + "/pwm1";
-			system(("sudo sh -c 'echo 1 > " + this->pwm1 + "/export'").c_str());
 			break;
 		case 4:
+			if(getFolderName(this->pwm0, "pwm1") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm0 + "/export'").c_str()); 
+			}
 			this->baseDir = this->pwm0 + "/pwm1";
-			system(("sudo sh -c 'echo 1 > " + this->pwm0 + "/export'").c_str()); 
 			break;
 		case 5:
+			if(getFolderName(this->pwm0,  "pwm0") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm0 + "/export'").c_str());
+			}
 			this->baseDir = this->pwm0 + "/pwm0";
-			system(("sudo sh -c 'echo 0 > " + this->pwm0 + "/export'").c_str());
 			break;
 		default:
 			std::cout << "Pino invalido";
 		
-	}
-	std::cout << this->baseDir << endl;
+	} 
 	system(("config-pin " + pwmMap[pwmPin] + " pwm").c_str());
 }
 
@@ -114,14 +123,38 @@ int PWM::getState()
 }
 
 
-string PWM::getPwmChipPath(std::string path){
-	DIR *dir = opendir(path);
+string PWM::getFolderName(string path, string pattern) {	
 	struct dirent *entry;
-	while (entry = readdir(dir)) {
-        if (entry->d_type == DT_DIR) {
-			return = entry->d_name;
+	int count;	
+	DIR *dir = opendir(path.c_str());
+	do {
+		dir = opendir(path.c_str());
+	} while (dir == NULL);
+	
+	
+	do {
+		rewinddir(dir);
+		count = 0;
+		while ((entry = readdir(dir)) != NULL) {
+			count++;
+			if (count > 2){
+				if (entry->d_type == DT_DIR && strstr(entry->d_name, pattern.c_str()) != NULL) {
+					return entry->d_name;
+				}
+			}
 		}
-    }
+	} while (count < 3);
+
+	closedir(dir);	
+	return "Folder not found";
+
 }
+
+void PWM::generatePathPwm(string chipName0, string chipName1, string chipName2 ){
+	this->pwm0 = fixPathPwm0 + chipName0;
+	this->pwm1 = fixPathPwm1 + chipName1;
+	this->pwm2 = fixPathPwm2 + chipName2;
+}
+
 
 

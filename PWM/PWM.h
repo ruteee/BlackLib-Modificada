@@ -6,13 +6,20 @@
 #include <string>
 #include <stdio.h>
 #include <sstream>
-#include <experimental/filesystem>
-#include <unistd.h>
+#include "unistd.h"
 #include <dirent.h>
-
-
+#include <cstring>
+#include "sys/types.h"
+#include <sys/stat.h>
+#include <time.h>
+#include <stdlib.h>
+#include <errno.h>
 
 using namespace std;
+
+const std::string fixPathPwm0 = "/sys/devices/platform/ocp/48300000.epwmss/48300200.pwm/pwm/";
+const std::string fixPathPwm1 = "/sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/";
+const std::string fixPathPwm2 = "/sys/devices/platform/ocp/48304000.epwmss/48304200.pwm/pwm/";
 
 enum pwmName            {   P8_13                   = 0,
                                 P8_19                   = 1,
@@ -51,7 +58,9 @@ class PWM {
 		string baseDir;
 		void loadPWM();
 		void setPwmBoard();
-		string getPwmChipPath(std::string path);
+		string getPwmChipName(std::string path);
+		void generatePathPwm(string chipName0, string chipName1, string chipName2);
+		string getFolderName(string path, string pattern);
 
 	public:
 		PWM(pwmName pinName);
