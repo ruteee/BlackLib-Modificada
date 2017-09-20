@@ -58,7 +58,6 @@ class PWM {
 		string baseDir;
 		void loadPWM();
 		void setPwmBoard();
-		string getPwmChipName(std::string path);
 		void generatePathPwm(string chipName0, string chipName1, string chipName2);
 		string getFolderName(string path, string pattern);
 
