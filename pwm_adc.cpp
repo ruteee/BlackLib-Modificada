@@ -3,20 +3,21 @@
 #include "ADC/Adc.h"
 #include "unistd.h"
 
-
-
 int main(int argc, char * argv[]){
-	ADC adc0(AINx::AIN0);
+	ADC adc(AINx::AIN0);
 	PWM pwm(P9_21);
 	pwm.setState(run);
-	int period = 100000000;
 	
 	std::cout << "run value " << pwm.getState() << endl;
 	while(true){
-		int dutyCycle  = adc0.getIntValue();
+		float dutyCycle  = adc.getPercentValue();
 		std::cout << "Duty Value " << dutyCycle << endl;
+		int period = 1000000000;		
 		pwm.setPeriod(period);
-		pwm.setDutyCycle(period*dutyCycle/100.0);		 
+		pwm.setDutyCycle(dutyCycle*period/100.0);
+		//std::cout << "dutyCycle " << pwm.getDutyCycle() << endl;
+		 
 	}
+	
 	return 0;
 }
