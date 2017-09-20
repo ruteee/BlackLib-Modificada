@@ -50,7 +50,7 @@ class PWM {
 		string baseDir;
 		void loadPWM();
 		void setPwmBoard();
-		string getPwmChipName(std::string path);
+		string getPwmChipPath(std::string path);
 
 	public:
 		PWM(pwmName pinName);
