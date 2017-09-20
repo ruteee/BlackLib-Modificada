@@ -12,7 +12,6 @@ void PWM::loadPWM()
 {
 	//TODO Adicionar clausula que checa se comando ja foi executado
 	system("sudo sh -c \"echo 'cape-universaln' > /sys/devices/platform/bone_capemgr/slots\"");
-	
 }
 
 void PWM::setPwmBoard(){
