@@ -14,7 +14,7 @@ int main(int argc, char * argv[]){
 		cout << "Duty Value " << dutyCycle << endl;
 		period = 1000000000;		
 		pwm.setPeriod(period);
-		pwm.setDutyCycle(dutyCycle*period/100.0);
+		pwm.setDutyCycle(dutyCycle*period/100);
 		 
 	}
 	
