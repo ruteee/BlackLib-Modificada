@@ -22,45 +22,46 @@ void PWM::setPwmBoard(){
 
 	switch (this->pwmPin){
 		case 0:
-			if(getFolderName(this->pwm2, "pwm1") == "Folder not found"){
-				system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str()); 
+			if(getFolderName(this->pwm2, "pwm-6:1") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str()); 
 			}
-			this->baseDir = this->pwm2 + "/pwm1";
+			this->baseDir = this->pwm2 + "/pwm-6:1";
 			break;
 		case 1:
-			if(getFolderName(this->pwm2, "pwm0") == "Folder not found"){
-				system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str());	
+			if(getFolderName(this->pwm2, "pwm-6:0") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str());	
 			}
-			this->baseDir = this->pwm2 + "/pwm0";
+			this->baseDir = this->pwm2 + "/pwm-6:0";
 			break;
 		case 2:
-			if(getFolderName(this->pwm1, "pwm0") == "Folder not found"){
+			if(getFolderName(this->pwm1, "pwm-3:0") == "Folder not found"){
 				system(("sudo sh -c 'echo 0 > " + this->pwm1 + "/export'").c_str()); 
 			}
-			this->baseDir = this->pwm1 + "/pwm0";
+			this->baseDir = this->pwm1 + "/pwm-3:0";
 			break;
 		case 3:
-			if(getFolderName(this->pwm1, "pwm1") == "Folder not found"){
+			if(getFolderName(this->pwm1, "pwm-3:1") == "Folder not found"){
 				system(("sudo sh -c 'echo 1 > " + this->pwm1 + "/export'").c_str());
 			}
-			this->baseDir = this->pwm1 + "/pwm1";
+			this->baseDir = this->pwm1 + "/pwm-3:1";
 			break;
 		case 4:
-			if(getFolderName(this->pwm0, "pwm1") == "Folder not found"){
-				system(("sudo sh -c 'echo 1 > " + this->pwm0 + "/export'").c_str()); 
+			if(getFolderName(this->pwm0, "pwm-1:1") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm0 + "/export'").c_str()); 
 			}
-			this->baseDir = this->pwm0 + "/pwm1";
+			this->baseDir = this->pwm0 + "/pwm-1:1";
 			break;
 		case 5:
-			if(getFolderName(this->pwm0,  "pwm0") == "Folder not found"){
-				system(("sudo sh -c 'echo 0 > " + this->pwm0 + "/export'").c_str());
+			if(getFolderName(this->pwm0,  "pwm-1:0") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm0 + "/export'").c_str());
 			}
-			this->baseDir = this->pwm0 + "/pwm0";
+			this->baseDir = this->pwm0 + "/pwm-1:0";
 			break;
 		default:
-			std::cout << "Pino invalido";
+			std::cout << "Pino invalido" << endl;
 		
 	} 
+	
 	system(("config-pin " + pwmMap[pwmPin] + " pwm").c_str());
 }
 
