@@ -19,35 +19,34 @@ void PWM::setPwmBoard(){
 	generatePathPwm(getFolderName(fixPathPwm0, "pwmchip"), 
 			getFolderName(fixPathPwm1, "pwmchip"), 
 			getFolderName(fixPathPwm2, "pwmchip"));
-
 	switch (this->pwmPin){
 		case 0:
-			if(getFolderName(this->pwm2, "pwm-6:1") == "Folder not found"){
-				system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str()); 
+			if(getFolderName(this->pwm2, "pwm-7:0") == "Folder not found"){
+				system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str()); 
 			}
-			this->baseDir = this->pwm2 + "/pwm-6:1";
+			this->baseDir = this->pwm2 + "/pwm-7:1";
 			break;
 		case 1:
-			if(getFolderName(this->pwm2, "pwm-6:0") == "Folder not found"){
-				system(("sudo sh -c 'echo 1 > " + this->pwm2 + "/export'").c_str());	
+			if(getFolderName(this->pwm2, "pwm-7:0") == "Folder not found"){
+				system(("sudo sh -c 'echo 0 > " + this->pwm2 + "/export'").c_str());	
 			}
-			this->baseDir = this->pwm2 + "/pwm-6:0";
+			this->baseDir = this->pwm2 + "/pwm-7:0";
 			break;
 		case 2:
-			if(getFolderName(this->pwm1, "pwm-3:0") == "Folder not found"){
+			if(getFolderName(this->pwm1, "pwm-4:0") == "Folder not found"){
 				system(("sudo sh -c 'echo 0 > " + this->pwm1 + "/export'").c_str()); 
 			}
-			this->baseDir = this->pwm1 + "/pwm-3:0";
+			this->baseDir = this->pwm1 + "/pwm-4:0";
 			break;
 		case 3:
-			if(getFolderName(this->pwm1, "pwm-3:1") == "Folder not found"){
+			if(getFolderName(this->pwm1, "pwm-4:1") == "Folder not found"){
 				system(("sudo sh -c 'echo 1 > " + this->pwm1 + "/export'").c_str());
 			}
-			this->baseDir = this->pwm1 + "/pwm-3:1";
+			this->baseDir = this->pwm1 + "/pwm-4:1";
 			break;
 		case 4:
 			if(getFolderName(this->pwm0, "pwm-1:1") == "Folder not found"){
-				system(("sudo sh -c 'echo 0 > " + this->pwm0 + "/export'").c_str()); 
+				system(("sudo sh -c 'echo 1 > " + this->pwm0 + "/export'").c_str()); 
 			}
 			this->baseDir = this->pwm0 + "/pwm-1:1";
 			break;
